@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludiomed - Plateforme de Partage Vidéo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>🎬 Ludiomed</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Accueil</a>
+                <a href="studio.html" class="nav-link" id="studioLink" style="display:none;">Studio</a>
+                <a href="admin.html" class="nav-link" id="adminLink" style="display:none;">Admin</a>
+                <button class="nav-btn" id="authBtn" onclick="showAuthModal()">Se Connecter</button>
+                <button class="nav-btn logout-btn" id="logoutBtn" style="display:none;" onclick="logout()">Se Déconnecter</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal d'authentification -->
+    <div id="authModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <div class="auth-tabs">
+                <button class="tab-button active" onclick="switchTab('login')">Connexion</button>
+                <button class="tab-button" onclick="switchTab('register')">Inscription</button>
+            </div>
+
+            <!-- Connexion -->
+            <div id="loginTab" class="tab-content active">
+                <h2>Connexion</h2>
+                <form onsubmit="login(event)">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginPassword" placeholder="Mot de passe" required>
+                    <button type="submit" class="btn">Se Connecter</button>
+                </form>
+            </div>
+
+            <!-- Inscription -->
+            <div id="registerTab" class="tab-content">
+                <h2>Inscription</h2>
+                <form onsubmit="register(event)">
+                    <input type="text" id="registerUsername" placeholder="Nom d'utilisateur" required>
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                    <input type="password" id="registerPassword" placeholder="Mot de passe" required>
+                    <button type="submit" class="btn">S'Inscrire</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>Bienvenue sur Ludiomed</h2>
+            <p>Partagez vos vidéos avec le monde entier</p>
+            <button class="btn btn-primary" onclick="document.getElementById('uploadSection').scrollIntoView()">
+                Uploader une vidéo
+            </button>
+        </section>
+
+        <!-- Section Upload -->
+        <section id="uploadSection" class="upload-section" style="display:none;">
+            <h2>Uploader une vidéo</h2>
+            <form id="uploadForm" onsubmit="uploadVideo(event)">
+                <input type="text" id="videoTitle" placeholder="Titre de la vidéo" required>
+                <textarea id="videoDescription" placeholder="Description" rows="4"></textarea>
+                <input type="file" id="videoFile" accept="video/*" required>
+                <button type="submit" class="btn btn-primary">Uploader</button>
+            </form>
+        </section>
+
+        <!-- Grille vidéos -->
+        <section class="videos-section">
+            <h2>Vidéos Populaires</h2>
+            <div id="videosGrid" class="videos-grid">
+                <!-- Les vidéos seront chargées ici -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal lecture vidéo -->
+    <div id="videoModal" class="modal" style="display:none;">
+        <div class="modal-content video-modal">
+            <span class="close" onclick="closeVideoModal()">&times;</span>
+            <video id="videoPlayer" controls width="100%"></video>
+            <div class="video-details">
+                <h3 id="modalVideoTitle"></h3>
+                <p id="modalVideoDescription"></p>
+                <div class="video-stats">
+                    <span id="modalVideoViews">0 vues</span>
+                    <span id="modalVideoLikes">0 j'aime</span>
+                </div>
+                <div class="video-actions">
+                    <button class="btn-action" onclick="likeVideo()">👍 J'aime</button>
+                    <button class="btn-action" onclick="dislikeVideo()">👎 Je n'aime pas</button>
+                </div>
+                <div class="comments-section">
+                    <h4>Commentaires</h4>
+                    <form onsubmit="addComment(event)" style="display:none;" id="commentForm">
+                        <input type="text" id="commentText" placeholder="Ajouter un commentaire..." required>
+                        <button type="submit" class="btn">Poster</button>
+                    </form>
+                    <div id="commentsList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Ludiomed. Tous droits réservés.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
